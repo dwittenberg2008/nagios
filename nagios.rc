@@ -51,7 +51,7 @@ export ORACLE_HOME=/usr/lib/oracle/xe/app/oracle/product/10.2.0/server
 
 check_config() {
     TMPFILE="/tmp/.configtest.$$"
-    /sbin/service nagios configtest > $TMPFILE
+    $exec -v $config > $TMPFILE
     WARN=`grep ^"Total Warnings:" $TMPFILE | sed s/"Total Warnings: "//g`
     ERR=`grep ^"Total Errors:" $TMPFILE | sed s/"Total Errors:   "//g`
 
