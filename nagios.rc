@@ -51,7 +51,7 @@ export ORACLE_HOME=/usr/lib/oracle/xe/app/oracle/product/10.2.0/server
 
 check_config() {
     TMPFILE="/tmp/.configtest.$$"
-    $exec -v $config > $TMPFILE
+    /sbin/service nagios configtest > $TMPFILE
     WARN=`grep ^"Total Warnings:" $TMPFILE | sed s/"Total Warnings: "//g`
     ERR=`grep ^"Total Errors:" $TMPFILE | sed s/"Total Errors:   "//g`
 
@@ -140,8 +140,8 @@ case "$1" in
         ;;
     configtest)
         echo -n  $"Checking config for $prog: "
-        check_config && success
-        echo
+        $nice runuser -s /bin/bash - $user -c "$corelimit >/dev/null 2>&1 ; $exec -vp $config"
+	RETVAL=$?
 	;;
     *)
         echo $"Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload|configtest}"
