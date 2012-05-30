@@ -1,6 +1,6 @@
 Name: check_mk
 Version: 1.2.0b5
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: check_mk suite of tools for Nagios environment
 Group: Applications/Utilities
 License: GPL
@@ -9,6 +9,7 @@ Source0: %{_sourcedir}/%{name}-%{version}.tar.gz
 Source1: %{_sourcedir}/livestatus.xinetd
 Packager: Daniel Wittenberg
 Vendor: Mathias Kettner
+Autoreq: 0
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %description
@@ -25,7 +26,7 @@ Check_MK offers a completely new approach for accessing status and also historic
 %package multisite
 Group: Applications/Utilities
 Summary: Check_mk multisite web GUI
-Requires: check_mk, httpd, mod_python
+Requires: check_mk, httpd, mod_python, python
 
 %description multisite
 Check_MK Multisite Web GUI
@@ -88,7 +89,7 @@ rm -rf %{buildroot}/usr/share/doc/check_mk/
 %__mkdir_p -m 755 %{buildroot}/usr/share/check_mk/livestatus/
 
 %clean
-%__rm -rf %{buildroot}
+#%__rm -rf %{buildroot}
 
 
 %pre
